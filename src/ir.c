@@ -32,7 +32,10 @@ ir_strresult(char *buffer, const int buffer_size, const ir_result_e result)
 	int num_write = 0;
 	const char *strresult = "";
 
-	if (!buffer || buffer_size < 0) goto failed;
+	/* buffer_size must be >= 1 because it guarantees snprintf() will write '\0'
+	 * to the buffer and printf(buffer) will never overflow.
+	 */
+	if (!buffer || buffer_size < 1) goto failed;
 
 #define IR_REPLACE(idx, name, description, ...) \
 	if (result == ir_result_##name) { \
@@ -42,14 +45,15 @@ ir_strresult(char *buffer, const int buffer_size, const ir_result_e result)
 	IR_RESULT_LIST(IR_REPLACE)
 #undef IR_REPLACE
 
+	/* It's ok not to check if snprintf() truncate or not. */
 	num_write = snprintf(
 		buffer, buffer_size, "Unknown result code %d", result);
-	if (num_write < 0 || num_write >= buffer_size) goto failed;
+	if (num_write < 0) goto failed;
 	return buffer;
 
 print:
 	num_write = snprintf(buffer, buffer_size, "%s", strresult);
-	if (num_write < 0 || num_write >= buffer_size) goto failed;
+	if (num_write < 0) goto failed;
 	return buffer;
 
 failed:
