@@ -202,12 +202,16 @@ extern "C" {
 
 /* Others */
 #define IR_INLINE __inline__
+#define IR_IOBJECT_ID "ir/iobject"
 
 #ifndef ERFKILL
 #define ERFKILL -1000
 #endif
 
 /* ------------------------- Public type definition ------------------------- */
+typedef struct ir_iobject_s ir_iobject_t;
+typedef struct ir_object_s ir_object_t;
+
 #define IR_REPLACE(idx, name, ...) ir_result_##name = idx,
 typedef enum {
 	IR_RESULT_LIST(IR_REPLACE)
