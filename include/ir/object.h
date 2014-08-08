@@ -49,7 +49,7 @@ struct ir_object_s {
 	ir_iobject_destroy_cb destroy;
 	ir_iobject_query_interface_cb query_interface;
 
-	int ref_count;
+	ir_refcount_t *refcount;
 };
 
 /* ---------------------- Public function declaration ---------------------- */
@@ -89,8 +89,14 @@ static IR_INLINE void
 ir_iobject_set_query_interface_cb(
 	void *iobject, ir_iobject_query_interface_cb query_interface)
 {
-	((ir_iobject_t*)iobject)->self->query_interface =
-		query_interface;
+	((ir_iobject_t*)iobject)->self->query_interface = query_interface;
+}
+
+/* ---------------------- Private function definition ---------------------- */
+static IR_INLINE int
+ir_iobject__destroy(ir_iobject_t *iobject)
+{
+	return iobject->self->destroy(iobject->self);
 }
 
 #ifdef __cplusplus

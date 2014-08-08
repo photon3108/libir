@@ -211,6 +211,7 @@ extern "C" {
 /* ------------------------- Public type definition ------------------------- */
 typedef struct ir_iobject_s ir_iobject_t;
 typedef struct ir_object_s ir_object_t;
+typedef struct ir_refcount_s ir_refcount_t;
 
 #define IR_REPLACE(idx, name, ...) ir_result_##name = idx,
 typedef enum {

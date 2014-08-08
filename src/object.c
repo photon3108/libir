@@ -23,14 +23,23 @@
  */
 
 #include <assert.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "ir/object.h"
+#include "ir/refcount.private.h"
 
 /* ----------------------- Public function definition ----------------------- */
 int ir_object_init(ir_object_t *object)
 {
-	if (!object) return ir_result_f_inval;
+	int result = ir_result_f_unknown;
+	int retcode = ir_result_f_unknown;
+
+	if (!object) {
+		retcode = ir_result_f_inval;
+		goto failed;
+	}
 
 	object->iobject.self = object;
 
@@ -39,14 +48,33 @@ int ir_object_init(ir_object_t *object)
 	ir_iobject_set_query_interface_cb(
 		object, (ir_iobject_query_interface_cb)ir_object_query_interface);
 
-	object->ref_count = 0;
+	object->refcount = NULL;
+	result = ir_refcount__init(&object->refcount, &object->iobject);
+	if (result < 0 || !object->refcount) {
+		retcode = result;
+		goto failed;
+	}
+
 	return ir_result_s_ok;
+
+failed:
+	result = ir_object_destroy(object);
+	assert(result >= 0);
+
+	return retcode;
 }
 
 int ir_object_destroy(ir_object_t *object)
 {
+	int result = ir_result_f_unknown;
+	ir_unused(result);
+
 	if (!object) return ir_result_f_inval;
-	assert(object->ref_count == 0);
+
+	if (object->refcount) {
+		result = ir_refcount__destroy(object->refcount);
+		assert(result >= 0);
+	}
 
 #ifndef NDEBUG
 	memset(object, 0, sizeof(*object));
@@ -70,18 +98,78 @@ int ir_object_query_interface(
 
 int ir_object__inc_ref(ir_object_t *object)
 {
-	return ++object->ref_count;
+	int result = ir_result_f_unknown;
+	int strong_count = ir_result_f_unknown;
+
+	if (!object) return ir_result_f_inval;
+
+	result = ir_refcount__inc_weak_ref(object->refcount);
+	if (result < 0) {
+		char buffer[64];
+
+		fprintf(
+			stderr,
+			"%s:%d, ir_refcount__inc_weak_ref() failed. result is '%s'.\n",
+			__FILE__,
+			__LINE__,
+			ir_strresult(buffer, sizeof(buffer), result));
+		fflush(stderr);
+		abort();
+	}
+
+	strong_count = ir_refcount__inc_strong_ref(object->refcount);
+	if (strong_count < 0) {
+		char buffer[64];
+
+		fprintf(
+			stderr,
+			"%s:%d, ir_refcount__inc_strong_ref() failed. result is '%s'.\n",
+			__FILE__,
+			__LINE__,
+			ir_strresult(buffer, sizeof(buffer), strong_count));
+		fflush(stderr);
+		abort();
+	}
+
+	return strong_count;
 }
 
 int ir_object__dec_ref(ir_object_t *object)
 {
-	int result = -1;
+	int result = ir_result_f_unknown;
+	ir_refcount_t *refcount = NULL;
+	int weak_count = ir_result_f_unknown;
 
-	result = --object->ref_count;
-	if (result > 0) return result;
-	assert(result == 0);
+	if (!object) return ir_result_f_inval;
+	refcount = object->refcount;
 
-	result = object->destroy(object);
-	assert(result >= 0);
-	return 0;
+	result = ir_refcount__dec_strong_ref(refcount);
+	if (result < 0) {
+		char buffer[64];
+
+		fprintf(
+			stderr,
+			"%s:%d, ir_refcount__dec_strong_ref() failed. result is '%s'.\n",
+			__FILE__,
+			__LINE__,
+			ir_strresult(buffer, sizeof(buffer), result));
+		fflush(stderr);
+		abort();
+	}
+
+	weak_count = ir_refcount__dec_weak_ref(refcount);
+	if (weak_count < 0) {
+		char buffer[64];
+
+		fprintf(
+			stderr,
+			"%s:%d, ir_refcount__dec_weak_ref() failed. result is '%s'.\n",
+			__FILE__,
+			__LINE__,
+			ir_strresult(buffer, sizeof(buffer), weak_count));
+		fflush(stderr);
+		abort();
+	}
+
+	return weak_count;
 }
