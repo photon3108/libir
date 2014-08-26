@@ -32,18 +32,20 @@ extern "C" {
 #endif
 
 /* ---------------------- Public function declaration ---------------------- */
-int ir_refcount__init(ir_refcount_t **refcount, ir_iobject_t *iobject);
-int ir_refcount__destroy(ir_refcount_t *refcount);
+int
+ir_refcount__init(ir_refcount_t **refcount, ir_iobject_t *iobject);
+int
+ir_refcount__destroy(ir_refcount_t *refcount);
 
-int ir_refcount__inc_strong_ref(ir_refcount_t *refcount);
-int ir_refcount__dec_strong_ref(ir_refcount_t *refcount);
+int
+ir_refcount__inc_strong_ref(ir_refcount_t *refcount);
+int
+ir_refcount__dec_strong_ref(ir_refcount_t *refcount);
 
-int ir_refcount__inc_weak_ref(ir_refcount_t *refcount);
-int ir_refcount__dec_weak_ref(ir_refcount_t *refcount);
-
-/* ---------------------- Private function declaration ---------------------- */
-//int ir_refcount__set_strong_ref(ir_refcount_t *refcount, const int value);
-//int ir_refcount__set_weak_ref(ir_refcount_t *refcount, const int value);
+int
+ir_refcount__inc_weak_ref(ir_refcount_t *refcount);
+int
+ir_refcount__dec_weak_ref(ir_refcount_t *refcount);
 
 #ifdef __cplusplus
 }

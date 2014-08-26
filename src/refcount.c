@@ -41,7 +41,8 @@ struct ir_refcount_s {
 };
 
 /* ----------------------- Public function definition ----------------------- */
-int ir_refcount__init(ir_refcount_t **refcount, ir_iobject_t *iobject)
+int
+ir_refcount__init(ir_refcount_t **refcount, ir_iobject_t *iobject)
 {
 	int result = ir_result_f_unknown;
 	ir_refcount_t *new_refcount = NULL;
@@ -73,7 +74,8 @@ failed:
 	return result;
 }
 
-int ir_refcount__destroy(ir_refcount_t *refcount)
+int
+ir_refcount__destroy(ir_refcount_t *refcount)
 {
 	if (!refcount) return ir_result_f_inval;
 	if (refcount->weak_count) return ir_result_s_false;
@@ -89,7 +91,8 @@ int ir_refcount__destroy(ir_refcount_t *refcount)
 	return ir_result_s_ok;
 }
 
-int ir_refcount__inc_strong_ref(ir_refcount_t *refcount)
+int
+ir_refcount__inc_strong_ref(ir_refcount_t *refcount)
 {
 	const int one = 1;
 	int count = 0;
@@ -108,7 +111,8 @@ int ir_refcount__inc_strong_ref(ir_refcount_t *refcount)
 	return ir_result_f_perm;
 }
 
-int ir_refcount__dec_strong_ref(ir_refcount_t *refcount)
+int
+ir_refcount__dec_strong_ref(ir_refcount_t *refcount)
 {
 	int result = ir_result_f_unknown;
 	int count = 0;
@@ -129,7 +133,8 @@ int ir_refcount__dec_strong_ref(ir_refcount_t *refcount)
 	return ir_result_f_perm;
 }
 
-int ir_refcount__inc_weak_ref(ir_refcount_t *refcount)
+int
+ir_refcount__inc_weak_ref(ir_refcount_t *refcount)
 {
 	int count = 0;
 
@@ -142,7 +147,8 @@ int ir_refcount__inc_weak_ref(ir_refcount_t *refcount)
 	return ir_result_f_perm;
 }
 
-int ir_refcount__dec_weak_ref(ir_refcount_t *refcount)
+int
+ir_refcount__dec_weak_ref(ir_refcount_t *refcount)
 {
 	int result = ir_result_f_unknown;
 	int count = 0;
@@ -168,100 +174,3 @@ int ir_refcount__dec_weak_ref(ir_refcount_t *refcount)
 	refcount->weak_count = count;
 	return ir_result_f_perm;
 }
-
-/* ---------------------- Private function definition ---------------------- */
-//int ir_refcount__set_strong_ref(ir_refcount_t *refcount, const int value)
-//{
-//	if (!refcount) return ir_result_f_inval;
-//	refcount->strong_count = value;
-//	return ir_result_s_ok;
-//}
-//
-//int ir_refcount__set_weak_ref(ir_refcount_t *refcount, const int value)
-//{
-//	if (!refcount) return ir_result_f_inval;
-//	refcount->weak_count = value;
-//	return ir_result_s_ok;
-//}
-//
-//int ir_refcount__inc_ref(ir_refcount_t *refcount)
-//{
-//	int weak_count = -1;
-//	int strong_count = -1;
-//
-//	weak_count = ir_refcount__inc_weak_ref(refcount);
-//	if (weak_count < 1) {
-//		char buffer[64];
-//
-//		fprintf(stderr,
-//				"[%s:%d]:\n"
-//				"weak_count must be >= 1, weak_count(%ld), result(%s)\n",
-//				__FILE__,
-//				__LINE__,
-//				weak_count,
-//				ir_strresult(weak_count, buffer, sizeof(buffer)));
-//		fflush(stderr);
-//		goto failed;
-//	}
-//
-//	strong_count = ir_refcount__inc_strong_ref(refcount);
-//	if (strong_count < 1) {
-//		char buffer[64];
-//
-//		fprintf(stderr,
-//				"[%s:%d]:\n"
-//				"strong_count must be >= 1, strong_count(%ld), result(%s)\n",
-//				__FILE__,
-//				__LINE__,
-//				strong_count,
-//				ir_strresult(strong_count, buffer, sizeof(buffer)));
-//		fflush(stderr);
-//		goto failed;
-//	}
-//
-//	return strong_count;
-//
-//failed:
-//	abort();
-//}
-//
-//int ir_refcount__dec_ref(ir_refcount_t *refcount)
-//{
-//	int weak_count = -1;
-//	int strong_count = -1;
-//
-//	strong_count = ir_refcount__dec_strong_ref(refcount);
-//	if (strong_count < 0) {
-//		char buffer[64];
-//
-//		fprintf(stderr,
-//				"[%s:%d]:\n"
-//				"strong_count must be >= 0, strong_count(%ld), result(%s)\n",
-//				__FILE__,
-//				__LINE__,
-//				strong_count,
-//				ir_strresult(strong_count, buffer, sizeof(buffer)));
-//		fflush(stderr);
-//		goto failed;
-//	}
-//
-//	weak_count = ir_refcount__dec_weak_ref(refcount);
-//	if (weak_count < 0) {
-//		char buffer[64];
-//
-//		fprintf(stderr,
-//				"[%s:%d]:\n"
-//				"weak_count must be >= 0, weak_count(%ld), result(%s)\n",
-//				__FILE__,
-//				__LINE__,
-//				weak_count,
-//				ir_strresult(weak_count, buffer, sizeof(buffer)));
-//		fflush(stderr);
-//		goto failed;
-//	}
-//
-//	return strong_count;
-//
-//failed:
-//	abort();
-//}

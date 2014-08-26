@@ -32,11 +32,15 @@ extern "C" {
 #endif
 
 /* ---------------------- Public function declaration ---------------------- */
-int ir_weakptr_init(ir_weakptr_t **weakptr, void *iobject);
-int ir_weakptr_init_by_weakptr(ir_weakptr_t **weakptr, ir_weakptr_t *ptr);
-int ir_weakptr_destroy(ir_weakptr_t *weakptr);
+int
+ir_weakptr_init(ir_weakptr_t **weakptr, void *iobject);
+int
+ir_weakptr_init_by_weakptr(ir_weakptr_t **weakptr, ir_weakptr_t *ptr);
+int
+ir_weakptr_destroy(ir_weakptr_t *weakptr);
 
-int ir_weakptr_summon(ir_weakptr_t *weakptr, void **strongptr);
+int
+ir_weakptr_summon(ir_weakptr_t *weakptr, void **strongptr);
 
 #ifdef __cplusplus
 }

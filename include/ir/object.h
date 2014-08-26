@@ -53,10 +53,13 @@ struct ir_object_s {
 };
 
 /* ---------------------- Public function declaration ---------------------- */
-int ir_object_init(ir_object_t *object);
-int ir_object_destroy(ir_object_t *object);
+int
+ir_object_init(ir_object_t *object);
+int
+ir_object_destroy(ir_object_t *object);
 
-int ir_object_query_interface(
+int
+ir_object_query_interface(
 	ir_object_t *object, const char *id, void **interface);
 
 /* ----------------------- Public function definition ----------------------- */

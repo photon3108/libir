@@ -42,18 +42,21 @@ ir_weakptr_init_impl(
 	ir_weakptr_t **weakptr, void *strong_ptr, ir_refcount_t *refcount);
 
 /* ----------------------- Public function definition ----------------------- */
-int ir_weakptr_init(ir_weakptr_t **weakptr, void *iobject)
+int
+ir_weakptr_init(ir_weakptr_t **weakptr, void *iobject)
 {
 	return ir_weakptr_init_impl(
 		weakptr, iobject, ((ir_iobject_t*)iobject)->self->refcount);
 }
 
-int ir_weakptr_init_by_weakptr(ir_weakptr_t **weakptr, ir_weakptr_t *ptr)
+int
+ir_weakptr_init_by_weakptr(ir_weakptr_t **weakptr, ir_weakptr_t *ptr)
 {
 	return ir_weakptr_init_impl(weakptr, ptr->strong_ptr, ptr->refcount);
 }
 
-int ir_weakptr_destroy(ir_weakptr_t *weakptr)
+int
+ir_weakptr_destroy(ir_weakptr_t *weakptr)
 {
 	int result = ir_result_f_unknown;
 	ir_unused(result);
@@ -72,7 +75,8 @@ int ir_weakptr_destroy(ir_weakptr_t *weakptr)
 	return ir_result_s_ok;
 }
 
-int ir_weakptr_summon(ir_weakptr_t *weakptr, void **strong_ptr)
+int
+ir_weakptr_summon(ir_weakptr_t *weakptr, void **strong_ptr)
 {
 	int result = ir_result_f_unknown;
 

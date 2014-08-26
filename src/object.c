@@ -31,7 +31,8 @@
 #include "ir/refcount.private.h"
 
 /* ----------------------- Public function definition ----------------------- */
-int ir_object_init(ir_object_t *object)
+int
+ir_object_init(ir_object_t *object)
 {
 	int result = ir_result_f_unknown;
 	int retcode = ir_result_f_unknown;
@@ -64,7 +65,8 @@ failed:
 	return retcode;
 }
 
-int ir_object_destroy(ir_object_t *object)
+int
+ir_object_destroy(ir_object_t *object)
 {
 	int result = ir_result_f_unknown;
 	ir_unused(result);
@@ -82,8 +84,8 @@ int ir_object_destroy(ir_object_t *object)
 	return ir_result_s_ok;
 }
 
-int ir_object_query_interface(
-	ir_object_t *object, const char *id, void **interface)
+int
+ir_object_query_interface(ir_object_t *object, const char *id, void **interface)
 {
 	if (!object || !id || !interface) return ir_result_f_inval;
 
@@ -96,7 +98,8 @@ int ir_object_query_interface(
 	return ir_result_f_no_interface;
 }
 
-int ir_object__inc_ref(ir_object_t *object)
+int
+ir_object__inc_ref(ir_object_t *object)
 {
 	int result = ir_result_f_unknown;
 	int strong_count = ir_result_f_unknown;
@@ -134,7 +137,8 @@ int ir_object__inc_ref(ir_object_t *object)
 	return strong_count;
 }
 
-int ir_object__dec_ref(ir_object_t *object)
+int
+ir_object__dec_ref(ir_object_t *object)
 {
 	int result = ir_result_f_unknown;
 	ir_refcount_t *refcount = NULL;

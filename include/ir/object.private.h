@@ -32,8 +32,10 @@ extern "C" {
 #endif
 
 /* ---------------------- Private function declaration ---------------------- */
-int ir_object__inc_ref(ir_object_t *object);
-int ir_object__dec_ref(ir_object_t *object);
+int
+ir_object__inc_ref(ir_object_t *object);
+int
+ir_object__dec_ref(ir_object_t *object);
 
 #ifdef __cplusplus
 }
