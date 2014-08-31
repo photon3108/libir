@@ -101,21 +101,21 @@ ir_object_query_interface(ir_object_t *object, const char *id, void **interface)
 int
 ir_object__inc_ref(ir_object_t *object)
 {
-	int result = ir_result_f_unknown;
+	int weak_count = ir_result_f_unknown;
 	int strong_count = ir_result_f_unknown;
 
 	if (!object) return ir_result_f_inval;
 
-	result = ir_refcount__inc_weak_ref(object->refcount);
-	if (result < 0) {
+	weak_count = ir_refcount__inc_weak_ref(object->refcount);
+	if (weak_count < 0) {
 		char buffer[64];
 
 		fprintf(
 			stderr,
-			"%s:%d, ir_refcount__inc_weak_ref() failed. result is '%s'.\n",
+			"libir **FATAL**: weak_count(%s). %s:%d\n",
+			ir_strresult(buffer, sizeof(buffer), weak_count),
 			__FILE__,
-			__LINE__,
-			ir_strresult(buffer, sizeof(buffer), result));
+			__LINE__);
 		fflush(stderr);
 		abort();
 	}
@@ -126,10 +126,10 @@ ir_object__inc_ref(ir_object_t *object)
 
 		fprintf(
 			stderr,
-			"%s:%d, ir_refcount__inc_strong_ref() failed. result is '%s'.\n",
+			"libir **FATAL**: strong_count(%s). %s:%d\n",
+			ir_strresult(buffer, sizeof(buffer), strong_count),
 			__FILE__,
-			__LINE__,
-			ir_strresult(buffer, sizeof(buffer), strong_count));
+			__LINE__);
 		fflush(stderr);
 		abort();
 	}
@@ -140,23 +140,23 @@ ir_object__inc_ref(ir_object_t *object)
 int
 ir_object__dec_ref(ir_object_t *object)
 {
-	int result = ir_result_f_unknown;
 	ir_refcount_t *refcount = NULL;
 	int weak_count = ir_result_f_unknown;
+	int strong_count = ir_result_f_unknown;
 
 	if (!object) return ir_result_f_inval;
 	refcount = object->refcount;
 
-	result = ir_refcount__dec_strong_ref(refcount);
-	if (result < 0) {
+	strong_count = ir_refcount__dec_strong_ref(refcount);
+	if (strong_count < 0) {
 		char buffer[64];
 
 		fprintf(
 			stderr,
-			"%s:%d, ir_refcount__dec_strong_ref() failed. result is '%s'.\n",
+			"libir **FATAL**: strong_count(%s). %s:%d\n",
+			ir_strresult(buffer, sizeof(buffer), strong_count),
 			__FILE__,
-			__LINE__,
-			ir_strresult(buffer, sizeof(buffer), result));
+			__LINE__);
 		fflush(stderr);
 		abort();
 	}
@@ -167,13 +167,13 @@ ir_object__dec_ref(ir_object_t *object)
 
 		fprintf(
 			stderr,
-			"%s:%d, ir_refcount__dec_weak_ref() failed. result is '%s'.\n",
+			"libir **FATAL**: weak_count(%s). %s:%d\n",
+			ir_strresult(buffer, sizeof(buffer), weak_count),
 			__FILE__,
-			__LINE__,
-			ir_strresult(buffer, sizeof(buffer), weak_count));
+			__LINE__);
 		fflush(stderr);
 		abort();
 	}
 
-	return weak_count;
+	return strong_count;
 }
