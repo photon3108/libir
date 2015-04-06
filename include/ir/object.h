@@ -25,6 +25,7 @@
 #ifndef _IR_IR_OBJECT_H_
 #define _IR_IR_OBJECT_H_
 
+#include <assert.h>
 #include "ir/ir.h"
 #include "ir/object.private.h"
 
@@ -66,18 +67,21 @@ ir_object_query_interface(
 static IR_INLINE int
 ir_iobject_inc_ref(void *iobject)
 {
+	assert(iobject);
 	return ir_object__inc_ref(((ir_iobject_t*)iobject)->self);
 }
 
 static IR_INLINE int
 ir_iobject_dec_ref(void *iobject)
 {
+	assert(iobject);
 	return ir_object__dec_ref(((ir_iobject_t*)iobject)->self);
 }
 
 static IR_INLINE int
 ir_iobject_query_interface(void *iobject, const char *id, void **interface)
 {
+	assert(iobject);
 	return ((ir_iobject_t*)iobject)->self->query_interface(
 		((ir_iobject_t*)iobject)->self, id, interface);
 }
@@ -85,6 +89,7 @@ ir_iobject_query_interface(void *iobject, const char *id, void **interface)
 static IR_INLINE void
 ir_iobject_set_destroy_cb(void *iobject, ir_iobject_destroy_cb destroy)
 {
+	assert(iobject);
 	((ir_iobject_t*)iobject)->self->destroy = destroy;
 }
 
@@ -92,6 +97,7 @@ static IR_INLINE void
 ir_iobject_set_query_interface_cb(
 	void *iobject, ir_iobject_query_interface_cb query_interface)
 {
+	assert(iobject);
 	((ir_iobject_t*)iobject)->self->query_interface = query_interface;
 }
 
