@@ -17,9 +17,14 @@
 *.out
 *.app
 
-# CodeBlocks
+# CodeBlocks Project
+*.workspace
 *.cbp
 *.depend
 *.layout
 Bin*
 Obj*
+
+# Cscope
+cscope.*
+
