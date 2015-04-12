@@ -35,167 +35,151 @@ extern "C" {
 /* X Macro */
 #define IR_RESULT_LIST(XX) \
 	/* Succeeded */ \
-	XX(1, s_false, "Succeeded(False)") \
-	XX(0, s_ok, "Succeeded(Ok/True)") \
+	XX(1, s_false, "False") \
+	XX(0, s_ok, "Ok/True") \
 	\
 	/* Failed */ \
-	XX(-9000, f_unknown, "Failed(Unknown error)") \
-	XX(-9001, f_no_interface, "Failed(No interface)") \
+	XX(-9000, f_unknown, "Unknown error") \
+	XX(-9001, f_no_interface, "No interface") \
 	\
 	/* Failed: errno*/ \
-	XX(-E2BIG, f_2big, "Failed(Argument list too long)") \
-	XX(-EACCES, f_acces, "Failed(Permission denied)") \
-	XX(-EADDRINUSE, f_addrinuse, "Failed(Address already in use)") \
-	XX(-EADDRNOTAVAIL,  \
-	   f_addrnotavail,  \
-	   "Failed(Cannot assign requested address)") \
-	XX(-EADV, f_adv, "Failed(Advertise error)") \
-	XX(-EAFNOSUPPORT,  \
-	   f_afnosupport,  \
-	   "Failed(Address family not supported by protocol)") \
-	XX(-EAGAIN, f_again, "Failed(Resource temporarily unavailable)") \
-	XX(-EALREADY, f_already, "Failed(Operation already in progress)") \
-	XX(-EBADE, f_bade, "Failed(Invalid exchange)") \
-	XX(-EBADF, f_badf, "Failed(Bad file descriptor)") \
-	XX(-EBADFD, f_badfd, "Failed(File descriptor in bad state)") \
-	XX(-EBADMSG, f_badmsg, "Failed(Bad message)") \
-	XX(-EBADR, f_badr, "Failed(Invalid request descriptor)") \
-	XX(-EBADRQC, f_badrqc, "Failed(Invalid request code)") \
-	XX(-EBADSLT, f_badslt, "Failed(Invalid slot)") \
-	XX(-EBFONT, f_bfont, "Failed(Bad font file format)") \
-	XX(-EBUSY, f_busy, "Failed(Device or resource busy)") \
-	XX(-ECANCELED, f_canceled, "Failed(Operation canceled)") \
-	XX(-ECHILD, f_child, "Failed(No child processes)") \
-	XX(-ECHRNG, f_chrng, "Failed(Channel number out of range)") \
-	XX(-ECOMM, f_comm, "Failed(Communication error on send)") \
-	XX(-ECONNABORTED,  \
-	   f_connaborted,  \
-	   "Failed(Software caused connection abort)") \
-	XX(-ECONNREFUSED, f_connrefused, "Failed(Connection refused)") \
-	XX(-ECONNRESET, f_connreset, "Failed(Connection reset by peer)") \
-	XX(-EDEADLK, f_deadlk, "Failed(Resource deadlock avoided)") \
-	XX(-EDEADLOCK, f_deadlock, "Failed(Resource deadlock avoided)") \
-	XX(-EDESTADDRREQ, f_destaddrreq, "Failed(Destination address required)") \
-	XX(-EDOM, f_dom, "Failed(Numerical argument out of domain)") \
-	XX(-EDOTDOT, f_dotdot, "Failed(RFS specific error)") \
-	XX(-EDQUOT, f_dquot, "Failed(Disk quota exceeded)") \
-	XX(-EEXIST, f_exist, "Failed(File exists)") \
-	XX(-EFAULT, f_fault, "Failed(Bad address)") \
-	XX(-EFBIG, f_fbig, "Failed(File too large)") \
-	XX(-EHOSTDOWN, f_hostdown, "Failed(Host is down)") \
-	XX(-EHOSTUNREACH, f_hostunreach, "Failed(No route to host)") \
-	XX(-EIDRM, f_idrm, "Failed(Identifier removed)") \
-	XX(-EILSEQ,  \
-	   f_ilseq,  \
-	   "Failed(Invalid or incomplete multibyte or wide character)") \
-	XX(-EINPROGRESS, f_inprogress, "Failed(Operation now in progress)") \
-	XX(-EINTR, f_intr, "Failed(Interrupted system call)") \
-	XX(-EINVAL, f_inval, "Failed(Invalid argument)") \
-	XX(-EIO, f_io, "Failed(Input/output error)") \
-	XX(-EISCONN, f_isconn, "Failed(Transport endpoint is already connected)") \
-	XX(-EISDIR, f_isdir, "Failed(Is a directory)") \
-	XX(-EISNAM, f_isnam, "Failed(Is a named type file)") \
-	XX(-EKEYEXPIRED, f_keyexpired, "Failed(Key has expired)") \
-	XX(-EKEYREJECTED, f_keyrejected, "Failed(Key was rejected by service)") \
-	XX(-EKEYREVOKED, f_keyrevoked, "Failed(Key has been revoked)") \
-	XX(-EL2HLT, f_l2hlt, "Failed(Level 2 halted)") \
-	XX(-EL2NSYNC, f_l2nsync, "Failed(Level 2 not synchronized)") \
-	XX(-EL3HLT, f_l3hlt, "Failed(Level 3 halted)") \
-	XX(-EL3RST, f_l3rst, "Failed(Level 3 reset)") \
-	XX(-ELIBACC, f_libacc, "Failed(Can not access a needed shared library)") \
-	XX(-ELIBBAD, f_libbad, "Failed(Accessing a corrupted shared library)") \
-	XX(-ELIBEXEC, f_libexec, "Failed(Cannot exec a shared library directly)") \
-	XX(-ELIBMAX,  \
-	   f_libmax,  \
-	   "Failed(Attempting to link in too many shared libraries)") \
-	XX(-ELIBSCN, f_libscn, "Failed(.lib section in a.out corrupted)") \
-	XX(-ELNRNG, f_lnrng, "Failed(Link number out of range)") \
-	XX(-ELOOP, f_loop, "Failed(Too many levels of symbolic links)") \
-	XX(-EMEDIUMTYPE, f_mediumtype, "Failed(Wrong medium type)") \
-	XX(-EMFILE, f_mfile, "Failed(Too many open files)") \
-	XX(-EMLINK, f_mlink, "Failed(Too many links)") \
-	XX(-EMSGSIZE, f_msgsize, "Failed(Message too long)") \
-	XX(-EMULTIHOP, f_multihop, "Failed(Multihop attempted)") \
-	XX(-ENAMETOOLONG, f_nametoolong, "Failed(File name too long)") \
-	XX(-ENAVAIL, f_navail, "Failed(No XENIX semaphores available)") \
-	XX(-ENETDOWN, f_netdown, "Failed(Network is down)") \
-	XX(-ENETRESET, f_netreset, "Failed(Network dropped connection on reset)") \
-	XX(-ENETUNREACH, f_netunreach, "Failed(Network is unreachable)") \
-	XX(-ENFILE, f_nfile, "Failed(Too many open files in system)") \
-	XX(-ENOANO, f_noano, "Failed(No anode)") \
-	XX(-ENOBUFS, f_nobufs, "Failed(No buffer space available)") \
-	XX(-ENOCSI, f_nocsi, "Failed(No CSI structure available)") \
-	XX(-ENODATA, f_nodata, "Failed(No data available)") \
-	XX(-ENODEV, f_nodev, "Failed(No such device)") \
-	XX(-ENOENT, f_noent, "Failed(No such file or directory)") \
-	XX(-ENOEXEC, f_noexec, "Failed(Exec format error)") \
-	XX(-ENOKEY, f_nokey, "Failed(Required key not available)") \
-	XX(-ENOLCK, f_nolck, "Failed(No locks available)") \
-	XX(-ENOLINK, f_nolink, "Failed(Link has been severed)") \
-	XX(-ENOMEDIUM, f_nomedium, "Failed(No medium found)") \
-	XX(-ENOMEM, f_nomem, "Failed(Cannot allocate memory)") \
-	XX(-ENOMSG, f_nomsg, "Failed(No message of desired type)") \
-	XX(-ENONET, f_nonet, "Failed(Machine is not on the network)") \
-	XX(-ENOPKG, f_nopkg, "Failed(Package not installed)") \
-	XX(-ENOPROTOOPT, f_noprotoopt, "Failed(Protocol not available)") \
-	XX(-ENOSPC, f_nospc, "Failed(No space left on device)") \
-	XX(-ENOSR, f_nosr, "Failed(Out of streams resources)") \
-	XX(-ENOSTR, f_nostr, "Failed(Device not a stream)") \
-	XX(-ENOSYS, f_nosys, "Failed(Function not implemented)") \
-	XX(-ENOTBLK, f_notblk, "Failed(Block device required)") \
-	XX(-ENOTCONN, f_notconn, "Failed(Transport endpoint is not connected)") \
-	XX(-ENOTDIR, f_notdir, "Failed(Not a directory)") \
-	XX(-ENOTEMPTY, f_notempty, "Failed(Directory not empty)") \
-	XX(-ENOTNAM, f_notnam, "Failed(Not a XENIX named type file)") \
-	XX(-ENOTRECOVERABLE, f_notrecoverable, "Failed(State not recoverable)") \
-	XX(-ENOTSOCK, f_notsock, "Failed(Socket operation on non-socket)") \
-	XX(-ENOTSUP, f_notsup, "Failed(Operation not supported)") \
-	XX(-ENOTTY, f_notty, "Failed(Inappropriate ioctl for device)") \
-	XX(-ENOTUNIQ, f_notuniq, "Failed(Name not unique on network)") \
-	XX(-ENXIO, f_nxio, "Failed(No such device or address)") \
-	XX(-EOPNOTSUPP, f_opnotsupp, "Failed(Operation not supported)") \
-	XX(-EOVERFLOW,  \
-	   f_overflow,  \
-	   "Failed(Value too large for defined data type)") \
-	XX(-EOWNERDEAD, f_ownerdead, "Failed(Owner died)") \
-	XX(-EPERM, f_perm, "Failed(Operation not permitted)") \
-	XX(-EPFNOSUPPORT, f_pfnosupport, "Failed(Protocol family not supported)") \
-	XX(-EPIPE, f_pipe, "Failed(Broken pipe)") \
-	XX(-EPROTO, f_proto, "Failed(Protocol error)") \
-	XX(-EPROTONOSUPPORT, f_protonosupport, "Failed(Protocol not supported)") \
-	XX(-EPROTOTYPE, f_prototype, "Failed(Protocol wrong type for socket)") \
-	XX(-ERANGE, f_range, "Failed(Numerical result out of range)") \
-	XX(-EREMCHG, f_remchg, "Failed(Remote address changed)") \
-	XX(-EREMOTE, f_remote, "Failed(Object is remote)") \
-	XX(-EREMOTEIO, f_remoteio, "Failed(Remote I/O error)") \
-	XX(-ERESTART,  \
-	   f_restart,  \
-	   "Failed(Interrupted system call should be restarted)") \
-	XX(-ERFKILL, f_rfkill, "Failed(Operation not possible due to RF-kill)") \
-	XX(-EROFS, f_rofs, "Failed(Read-only file system)") \
+	XX(-E2BIG, f_2big, "Argument list too long") \
+	XX(-EACCES, f_acces, "Permission denied") \
+	XX(-EADDRINUSE, f_addrinuse, "Address already in use") \
+	XX(-EADDRNOTAVAIL, f_addrnotavail, "Cannot assign requested address") \
+	XX(-EADV, f_adv, "Advertise error") \
+	XX(-EAFNOSUPPORT, \
+	   f_afnosupport, \
+	   "Address family not supported by protocol") \
+	XX(-EAGAIN, f_again, "Resource temporarily unavailable") \
+	XX(-EALREADY, f_already, "Operation already in progress") \
+	XX(-EBADE, f_bade, "Invalid exchange") \
+	XX(-EBADF, f_badf, "Bad file descriptor") \
+	XX(-EBADFD, f_badfd, "File descriptor in bad state") \
+	XX(-EBADMSG, f_badmsg, "Bad message") \
+	XX(-EBADR, f_badr, "Invalid request descriptor") \
+	XX(-EBADRQC, f_badrqc, "Invalid request code") \
+	XX(-EBADSLT, f_badslt, "Invalid slot") \
+	XX(-EBFONT, f_bfont, "Bad font file format") \
+	XX(-EBUSY, f_busy, "Device or resource busy") \
+	XX(-ECANCELED, f_canceled, "Operation canceled") \
+	XX(-ECHILD, f_child, "No child processes") \
+	XX(-ECHRNG, f_chrng, "Channel number out of range") \
+	XX(-ECOMM, f_comm, "Communication error on send") \
+	XX(-ECONNABORTED, f_connaborted, "Software caused connection abort") \
+	XX(-ECONNREFUSED, f_connrefused, "Connection refused") \
+	XX(-ECONNRESET, f_connreset, "Connection reset by peer") \
+	XX(-EDEADLK, f_deadlk, "Resource deadlock avoided") \
+	XX(-EDEADLOCK, f_deadlock, "Resource deadlock avoided") \
+	XX(-EDESTADDRREQ, f_destaddrreq, "Destination address required") \
+	XX(-EDOM, f_dom, "Numerical argument out of domain") \
+	XX(-EDOTDOT, f_dotdot, "RFS specific error") \
+	XX(-EDQUOT, f_dquot, "Disk quota exceeded") \
+	XX(-EEXIST, f_exist, "File exists") \
+	XX(-EFAULT, f_fault, "Bad address") \
+	XX(-EFBIG, f_fbig, "File too large") \
+	XX(-EHOSTDOWN, f_hostdown, "Host is down") \
+	XX(-EHOSTUNREACH, f_hostunreach, "No route to host") \
+	XX(-EIDRM, f_idrm, "Identifier removed") \
+	XX(-EILSEQ, f_ilseq, "Invalid or incomplete multibyte or wide character") \
+	XX(-EINPROGRESS, f_inprogress, "Operation now in progress") \
+	XX(-EINTR, f_intr, "Interrupted system call") \
+	XX(-EINVAL, f_inval, "Invalid argument") \
+	XX(-EIO, f_io, "Input/output error") \
+	XX(-EISCONN, f_isconn, "Transport endpoint is already connected") \
+	XX(-EISDIR, f_isdir, "Is a directory") \
+	XX(-EISNAM, f_isnam, "Is a named type file") \
+	XX(-EKEYEXPIRED, f_keyexpired, "Key has expired") \
+	XX(-EKEYREJECTED, f_keyrejected, "Key was rejected by service") \
+	XX(-EKEYREVOKED, f_keyrevoked, "Key has been revoked") \
+	XX(-EL2HLT, f_l2hlt, "Level 2 halted") \
+	XX(-EL2NSYNC, f_l2nsync, "Level 2 not synchronized") \
+	XX(-EL3HLT, f_l3hlt, "Level 3 halted") \
+	XX(-EL3RST, f_l3rst, "Level 3 reset") \
+	XX(-ELIBACC, f_libacc, "Can not access a needed shared library") \
+	XX(-ELIBBAD, f_libbad, "Accessing a corrupted shared library") \
+	XX(-ELIBEXEC, f_libexec, "Cannot exec a shared library directly") \
+	XX(-ELIBMAX, f_libmax, "Attempting to link in too many shared libraries") \
+	XX(-ELIBSCN, f_libscn, ".lib section in a.out corrupted") \
+	XX(-ELNRNG, f_lnrng, "Link number out of range") \
+	XX(-ELOOP, f_loop, "Too many levels of symbolic links") \
+	XX(-EMEDIUMTYPE, f_mediumtype, "Wrong medium type") \
+	XX(-EMFILE, f_mfile, "Too many open files") \
+	XX(-EMLINK, f_mlink, "Too many links") \
+	XX(-EMSGSIZE, f_msgsize, "Message too long") \
+	XX(-EMULTIHOP, f_multihop, "Multihop attempted") \
+	XX(-ENAMETOOLONG, f_nametoolong, "File name too long") \
+	XX(-ENAVAIL, f_navail, "No XENIX semaphores available") \
+	XX(-ENETDOWN, f_netdown, "Network is down") \
+	XX(-ENETRESET, f_netreset, "Network dropped connection on reset") \
+	XX(-ENETUNREACH, f_netunreach, "Network is unreachable") \
+	XX(-ENFILE, f_nfile, "Too many open files in system") \
+	XX(-ENOANO, f_noano, "No anode") \
+	XX(-ENOBUFS, f_nobufs, "No buffer space available") \
+	XX(-ENOCSI, f_nocsi, "No CSI structure available") \
+	XX(-ENODATA, f_nodata, "No data available") \
+	XX(-ENODEV, f_nodev, "No such device") \
+	XX(-ENOENT, f_noent, "No such file or directory") \
+	XX(-ENOEXEC, f_noexec, "Exec format error") \
+	XX(-ENOKEY, f_nokey, "Required key not available") \
+	XX(-ENOLCK, f_nolck, "No locks available") \
+	XX(-ENOLINK, f_nolink, "Link has been severed") \
+	XX(-ENOMEDIUM, f_nomedium, "No medium found") \
+	XX(-ENOMEM, f_nomem, "Cannot allocate memory") \
+	XX(-ENOMSG, f_nomsg, "No message of desired type") \
+	XX(-ENONET, f_nonet, "Machine is not on the network") \
+	XX(-ENOPKG, f_nopkg, "Package not installed") \
+	XX(-ENOPROTOOPT, f_noprotoopt, "Protocol not available") \
+	XX(-ENOSPC, f_nospc, "No space left on device") \
+	XX(-ENOSR, f_nosr, "Out of streams resources") \
+	XX(-ENOSTR, f_nostr, "Device not a stream") \
+	XX(-ENOSYS, f_nosys, "Function not implemented") \
+	XX(-ENOTBLK, f_notblk, "Block device required") \
+	XX(-ENOTCONN, f_notconn, "Transport endpoint is not connected") \
+	XX(-ENOTDIR, f_notdir, "Not a directory") \
+	XX(-ENOTEMPTY, f_notempty, "Directory not empty") \
+	XX(-ENOTNAM, f_notnam, "Not a XENIX named type file") \
+	XX(-ENOTRECOVERABLE, f_notrecoverable, "State not recoverable") \
+	XX(-ENOTSOCK, f_notsock, "Socket operation on non-socket") \
+	XX(-ENOTSUP, f_notsup, "Operation not supported") \
+	XX(-ENOTTY, f_notty, "Inappropriate ioctl for device") \
+	XX(-ENOTUNIQ, f_notuniq, "Name not unique on network") \
+	XX(-ENXIO, f_nxio, "No such device or address") \
+	XX(-EOPNOTSUPP, f_opnotsupp, "Operation not supported") \
+	XX(-EOVERFLOW, f_overflow, "Value too large for defined data type") \
+	XX(-EOWNERDEAD, f_ownerdead, "Owner died") \
+	XX(-EPERM, f_perm, "Operation not permitted") \
+	XX(-EPFNOSUPPORT, f_pfnosupport, "Protocol family not supported") \
+	XX(-EPIPE, f_pipe, "Broken pipe") \
+	XX(-EPROTO, f_proto, "Protocol error") \
+	XX(-EPROTONOSUPPORT, f_protonosupport, "Protocol not supported") \
+	XX(-EPROTOTYPE, f_prototype, "Protocol wrong type for socket") \
+	XX(-ERANGE, f_range, "Numerical result out of range") \
+	XX(-EREMCHG, f_remchg, "Remote address changed") \
+	XX(-EREMOTE, f_remote, "Object is remote") \
+	XX(-EREMOTEIO, f_remoteio, "Remote I/O error") \
+	XX(-ERESTART, f_restart, "Interrupted system call should be restarted") \
+	XX(-ERFKILL, f_rfkill, "Operation not possible due to RF-kill") \
+	XX(-EROFS, f_rofs, "Read-only file system") \
 	XX(-ESHUTDOWN,  \
 	   f_shutdown,  \
-	   "Failed(Cannot send after transport endpoint shutdown)") \
-	XX(-ESOCKTNOSUPPORT,  \
-	   f_socktnosupport,  \
-	   "Failed(Socket type not supported)") \
-	XX(-ESPIPE, f_spipe, "Failed(Illegal seek)") \
-	XX(-ESRCH, f_srch, "Failed(No such process)") \
-	XX(-ESRMNT, f_srmnt, "Failed(Srmount error)") \
-	XX(-ESTALE, f_stale, "Failed(Stale NFS file handle)") \
-	XX(-ESTRPIPE, f_strpipe, "Failed(Streams pipe error)") \
-	XX(-ETIME, f_time, "Failed(Timer expired)") \
-	XX(-ETIMEDOUT, f_timedout, "Failed(Connection timed out)") \
-	XX(-ETOOMANYREFS,  \
-	   f_toomanyrefs,  \
-	   "Failed(Too many references: cannot splice)") \
-	XX(-ETXTBSY, f_txtbsy, "Failed(Text file busy)") \
-	XX(-EUCLEAN, f_uclean, "Failed(Structure needs cleaning)") \
-	XX(-EUNATCH, f_unatch, "Failed(Protocol driver not attached)") \
-	XX(-EUSERS, f_users, "Failed(Too many users)") \
-	XX(-EWOULDBLOCK, f_wouldblock, "Failed(Resource temporarily unavailable)") \
-	XX(-EXDEV, f_xdev, "Failed(Invalid cross-device link)") \
-	XX(-EXFULL, f_xfull, "Failed(Exchange full)") \
+	   "Cannot send after transport endpoint shutdown") \
+	XX(-ESOCKTNOSUPPORT, f_socktnosupport, "Socket type not supported") \
+	XX(-ESPIPE, f_spipe, "Illegal seek") \
+	XX(-ESRCH, f_srch, "No such process") \
+	XX(-ESRMNT, f_srmnt, "Srmount error") \
+	XX(-ESTALE, f_stale, "Stale NFS file handle") \
+	XX(-ESTRPIPE, f_strpipe, "Streams pipe error") \
+	XX(-ETIME, f_time, "Timer expired") \
+	XX(-ETIMEDOUT, f_timedout, "Connection timed out") \
+	XX(-ETOOMANYREFS, f_toomanyrefs, "Too many references: cannot splice") \
+	XX(-ETXTBSY, f_txtbsy, "Text file busy") \
+	XX(-EUCLEAN, f_uclean, "Structure needs cleaning") \
+	XX(-EUNATCH, f_unatch, "Protocol driver not attached") \
+	XX(-EUSERS, f_users, "Too many users") \
+	XX(-EWOULDBLOCK, f_wouldblock, "Resource temporarily unavailable") \
+	XX(-EXDEV, f_xdev, "Invalid cross-device link") \
+	XX(-EXFULL, f_xfull, "Exchange full") \
 
 /* Function */
 #define ir_unused(x) ((void)(x))
@@ -222,7 +206,11 @@ typedef enum {
 
 /* ---------------------- Public function declaration ---------------------- */
 const char *
-ir_strresult(char *buffer, const int buffer_size, const ir_result_e result);
+ir_result_get_name(
+	const ir_result_e result, char *buffer, const int buffer_size);
+const char *
+ir_result_get_description(
+	const ir_result_e result, char *buffer, const int buffer_size);
 
 #ifdef __cplusplus
 }

@@ -25,37 +25,86 @@
 #include <stdio.h>
 #include "ir/ir.h"
 
+/* ---------------------- Private function declaration ---------------------- */
+static const char *
+ir_result_print(
+	const ir_result_e result,
+	const char *output,
+	char *buffer,
+	const int buffer_size);
+
 /* ----------------------- Public function definition ----------------------- */
 const char *
-ir_strresult(char *buffer, const int buffer_size, const ir_result_e result)
+ir_result_get_name(
+	const ir_result_e result, char *buffer, const int buffer_size)
 {
-	int num_write = 0;
-	const char *strresult = "";
-
-	/* buffer_size must be >= 1 because it guarantees snprintf() will write '\0'
-	 * to the buffer and printf(buffer) will never overflow.
-	 */
-	if (!buffer || buffer_size < 1) goto failed;
+	const char *output = NULL;
 
 #define IR_REPLACE(idx, name, description, ...) \
 	if (result == ir_result_##name) { \
-		strresult = description; \
-		goto print; \
+		output = "ir_result_" #name; \
+		goto finally; \
 	}
 	IR_RESULT_LIST(IR_REPLACE)
 #undef IR_REPLACE
 
-	/* It's ok not to check if snprintf() truncate or not. */
-	num_write = snprintf(
-		buffer, buffer_size, "Unknown result code %d", result);
-	if (num_write < 0) goto failed;
-	return buffer;
+	goto finally;
 
-print:
-	num_write = snprintf(buffer, buffer_size, "%s", strresult);
+finally:
+	return ir_result_print(result, output, buffer, buffer_size);
+}
+
+const char *
+ir_result_get_description(
+	const ir_result_e result, char *buffer, const int buffer_size)
+{
+	const char *output = NULL;
+
+#define IR_REPLACE(idx, name, description, ...) \
+	if (result == ir_result_##name) { \
+		output = description; \
+		goto finally; \
+	}
+	IR_RESULT_LIST(IR_REPLACE)
+#undef IR_REPLACE
+
+	goto finally;
+
+finally:
+	return ir_result_print(result, output, buffer, buffer_size);
+}
+
+static const char *
+ir_result_print(
+	const ir_result_e result,
+	const char *output,
+	char *buffer,
+	const int buffer_size)
+{
+	int num_write = 0;
+
+	if (!buffer || buffer_size < 1) goto failed;
+
+	if (!output) {
+		num_write = snprintf(
+			buffer, buffer_size, "Unknown result code %d", result);
+		if (num_write < 0 || num_write >= buffer_size) goto failed;
+		output = buffer;
+		goto finally;
+	}
+
+	goto print_output;
+
+print_output:
+	num_write = snprintf(buffer, buffer_size, "%s", output);
 	if (num_write < 0) goto failed;
-	return buffer;
+	goto finally;
 
 failed:
-	return "";
+	output = "Unknown result code";
+	goto finally;
+
+finally:
+	return output;
 }
+
